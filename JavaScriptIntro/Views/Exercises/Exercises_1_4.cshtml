@@ -25,10 +25,10 @@
         location: 'Georgia',
         type: 'High-Octane',
         powerGenerated: '1.5B',
-        maintenanceCost: 100,000
+        maintenanceCost: 100000
     });
 
-    var plantHatchView = new PowerPlantView(plantHatch);
+    var plantHatchView = new PowerPlantView({ model: plantHatch});
 
     $("#main").html(plantHatchView.render().el);
 </script>
