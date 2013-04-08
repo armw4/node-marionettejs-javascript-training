@@ -1,6 +1,24 @@
 ﻿<button id="upgrade">Upgrade</button>
 <script>
     
-    // Type your code here.
+var PowerPlant = function(powerGenerated) {
+    this.powerGenerated = powerGenerated;
+}
+    
+var SolarPowerPlant = function() {
 
+    this.printPower = function() {
+        console.log(this.powerGenerated);
+    }
+}
+
+SolarPowerPlant.prototype = new PowerPlant();
+
+var plant = new SolarPowerPlant();
+
+plant.printPower();
+
+upgrade.addEventListener("click", function() {
+
+});
 </script>
