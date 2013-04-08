@@ -15,7 +15,7 @@
     var PowerPlantView = Backbone.View.extend({
         template: _.template($("#tmpl-powerPlant").html()),
         render: function() {
-            this.$el.html(this.template(this.model));
+            this.$el.html(this.template(this.model.toJSON()));
 
             return this;
         }
