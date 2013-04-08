@@ -13,7 +13,7 @@
     var PowerPlant = Backbone.Model.extend({});
 
     var PowerPlantView = Backbone.View.extend({
-        template: _.template($("#tmpl-powerplant").html()),
+        template: _.template($("#tmpl-powerPlant").html()),
         render: function() {
             this.$el.html(this.template(this.model));
 
