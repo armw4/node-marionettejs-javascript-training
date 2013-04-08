@@ -10,25 +10,39 @@
 <script src="~/Content/js/lib/backbone-1.0.0.js"></script>
 <script>
 
-    var PowerPlant = Backbone.Model.extend({});
+    var PowerPlant = Backbone.Model.extend({
+        urlRoot: "/api/powerplants"
+    });
 
     var PowerPlantView = Backbone.View.extend({
-        template: _.template($("#tmpl-powerPlant").html()),
+        template: _.template($("#tmpl-powerplant").html()),
         render: function() {
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(this.template(myPlant.toJSON()));
 
             return this;
         }
     });
 
-    var plantHatch = new PowerPlant({
-        location: 'Georgia',
-        type: 'High-Octane',
-        powerGenerated: '1.5B',
-        maintenanceCost: 100000
+    var AppRouter = Backbone.Router.extend({
+        routes: {
+            "powerplant/:id": "plant"
+        },
+
+        plant: function(id) {
+            var myPlant = new PowerPlant({ id: id});
+
+            myPlant.fetch({
+                success: function() {
+                    var plantHatchView = new PowerPlantView({ model: plantHatch});
+                    $("#main").html(plantHatchView.render().el);
+                }
+            });
+        }
     });
 
-    var plantHatchView = new PowerPlantView({ model: plantHatch});
+    $(function() {
+        var router = new AppRouter();
 
-    $("#main").html(plantHatchView.render().el);
+        Backbone.history.start();
+    })
 </script>
