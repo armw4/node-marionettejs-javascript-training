@@ -10,6 +10,25 @@
 <script src="~/Content/js/lib/backbone-1.0.0.js"></script>
 <script>
 
-    // Type your code here.
+    var PowerPlant = Backbone.Model.extend({});
 
+    var PowerPlantView = Backbone.View.extend({
+        template: _.template($("#tmpl-powerplant").html()),
+        render: function() {
+            this.$el.html(this.template(this.model));
+
+            return this;
+        }
+    });
+
+    var plantHatch = new PowerPlant({
+        location: 'Georgia',
+        type: 'High-Octane',
+        powerGenerated: '1.5B',
+        maintenanceCost: 10,0000
+    });
+
+    var plantHatchView = new PowerPlantView(plantHatch);
+
+    $("#main").html(plantHatchView.render().el);
 </script>
