@@ -1,0 +1,129 @@
+﻿<div id="main"></div>
+
+<script id="tmpl-powerPlantListItem" type="text/template">
+    <a href="#/powerplants/<%= id %>"><%= location %></a>
+</script>
+
+<script id="tmpl-powerPlantDetails" type="text/template">
+    <h2><%= location %></h2>
+    <p><strong>Type:</strong> <input id="type" value="<%= type %>" /></p>
+    <p><strong>Power Generated:</strong> <input id="powerGenerated" type="number" value="<%= powerGenerated %>" />MW</p>
+    <p><strong>Maintenance Cost:</strong> $<input id="maintenanceCost" type="number" value="<%= maintenanceCost %>" /></p>
+    <button id="save">Save</button>
+    <a href="#/">Return to List</a>
+</script>
+
+<script src="~/Content/js/lib/jquery-1.9.1.js"></script>
+<script src="~/Content/js/lib/underscore-1.4.4.js"></script>
+<script src="~/Content/js/lib/backbone-1.0.0.js"></script>
+<script>
+
+    PlantManager = {
+
+        start: function () {
+            PlantManager.appView = new PlantManager.AppView();
+            PlantManager.router = new PlantManager.Router();
+            Backbone.history.start();
+        }
+
+    };
+
+    PlantManager.AppView = Backbone.View.extend({
+        el: '#main',
+        show: function (view) {
+            this.$el.html(view.el);
+        }
+    });
+
+    // Collections
+
+    PlantManager.PowerPlantList = Backbone.Collection.extend({
+        url: '/api/powerplants'
+    });
+
+    // Models
+
+    PlantManager.PowerPlant = Backbone.Model.extend({
+        urlRoot: '/api/powerplants'
+    });
+
+    // Views
+
+    PlantManager.PowerPlantListView = Backbone.View.extend({
+        tagName: 'ul',
+        initialize: function () {
+            this.listenTo(this.collection, 'sync', this.render);
+        },
+        render: function () {
+            this.$el.empty();
+            this.collection.each(this.renderOne, this);
+            return this;
+        },
+        renderOne: function (powerPlant) {
+            var view = new PlantManager.PowerPlantListItemView({ model: powerPlant });
+            this.$el.append(view.render().el);
+        }
+    });
+
+    PlantManager.PowerPlantListItemView = Backbone.View.extend({
+        tagName: 'li',
+        template: _.template($('#tmpl-powerPlantListItem').html()),
+        render: function () {
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        }
+    });
+
+    PlantManager.PowerPlantView = Backbone.View.extend({
+        events: {
+            'change #location': 'updateLocation',
+            'change #type': 'updateType',
+            'change #powerGenerated': 'updatePower',
+            'change #maintenanceCost': 'updateCost',
+            'click #save': 'save'
+        },
+        template: _.template($('#tmpl-powerPlantDetails').html()),
+        initialize: function () {
+            this.listenTo(this.model, 'sync', this.render);
+            this.listenTo(this.model, 'create', this.returnToList);
+        },
+        render: function () {
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        },
+        updateLocation: function (e) { this.model.set({ location: $(e.target).val() }); },
+        updateType: function (e) { this.model.set({ type: $(e.target).val() }); },
+        updatePower: function (e) { this.model.set({ powerGenerated: $(e.target).val() }); },
+        updateCost: function (e) { this.model.set({ maintenanceCost: $(e.target).val() }); },
+        save: function () {
+            this.model.save();
+        },
+        returnToList: function () {
+            PlantManager.router.navigate('');
+        }
+    });
+
+    // Router
+
+    PlantManager.Router = Backbone.Router.extend({
+        routes: {
+            '': 'list',
+            'powerplants/:id': 'details'
+        },
+        list: function () {
+            var list = new PlantManager.PowerPlantList();
+            var view = new PlantManager.PowerPlantListView({ collection: list });
+            PlantManager.appView.show(view);
+            list.fetch();
+        },
+        details: function (id) {
+            var item = new PlantManager.PowerPlant({ id: id });
+            var view = new PlantManager.PowerPlantView({ model: item });
+            PlantManager.appView.show(view);
+            item.fetch();
+        },
+    });
+
+    PlantManager.start();
+
+</script>

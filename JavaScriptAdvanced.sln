@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JavaScriptAdvanced", "JavaScriptIntro\JavaScriptAdvanced.csproj", "{179922B3-A3F4-4794-85EE-04E3B75B50FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{179922B3-A3F4-4794-85EE-04E3B75B50FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{179922B3-A3F4-4794-85EE-04E3B75B50FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{179922B3-A3F4-4794-85EE-04E3B75B50FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{179922B3-A3F4-4794-85EE-04E3B75B50FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

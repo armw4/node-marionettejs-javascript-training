@@ -1,0 +1,57 @@
+﻿<button id="upgrade">Upgrade</button>
+<script src="~/Content/js/lib/underscore-1.4.4.js"></script>
+<script>
+
+    // Steps 2-5
+    var PowerPlant = function (powerGenerated) {
+        this.powerGenerated = powerGenerated;
+    };
+
+    var SolarPowerPlant = function () {
+        this.printPower = function () {
+            console.log(this.powerGenerated);
+        };
+    };
+
+    SolarPowerPlant.prototype = new PowerPlant(100);
+
+    var solar = new SolarPowerPlant();
+    solar.printPower();
+
+    // Step 6
+    var powerPlant = {
+        upgrade: function () {
+            console.log(this); // `this` is `powerPlant`
+        }
+    };
+    foo.bar();
+
+    // Step 7
+    var PowerPlant = function () {
+        console.log(this); // `this` is `PowerPlant`
+    };
+
+    // Step 8
+    document.getElementById('upgrade').addEventListener('click', function () {
+        console.log(this); // `this` is the button!
+    });
+
+    // Step 9
+
+    var powerPlant = {
+        powerGenerated: 100
+    };
+
+    var upgradePowerPlant = function () {
+        this.powerGenerated = this.powerGenerated * 1.1;
+        return this.powerGenerated;
+    };
+
+    console.log(upgradePowerPlant()); // NaN
+
+    // Step 10
+    console.log(upgradePowerPlant.call(powerPlant)); // 110
+
+    /* console.log(_.bind(upgradePowerPlant, powerPlant)()); */
+
+</script>

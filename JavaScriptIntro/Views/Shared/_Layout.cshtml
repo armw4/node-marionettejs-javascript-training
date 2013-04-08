@@ -1,0 +1,31 @@
+﻿<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercises</title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900">
+    <link rel="stylesheet" href="~/Content/css/style.css" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <nav>
+            <span class="title">Exercises</span>
+            <ul>
+                <li><a href="@Url.Action("Exercises_1_2", "Exercises")">1.2</a> &middot; </li>
+                <li><a href="@Url.Action("Exercises_1_4", "Exercises")">1.4</a> &middot; </li>
+                <li><a href="@Url.Action("Exercises_2_1", "Exercises")">2.1</a> &middot; </li>
+                <li><a href="@Url.Action("Exercises_2_2", "Exercises")">2.2</a> &middot; </li>
+                <li><a href="@Url.Action("Exercises_2_3", "Exercises")">2.3</a> &middot; </li>
+                <li><a href="@Url.Action("Exercises_2_4", "Exercises")">2.4</a> &middot; </li>
+                <li><a href="@Url.Action("Exercises_3_1", "Exercises")">3.1</a></li>
+            </ul>
+        </nav>
+        @RenderBody()
+    </div>
+    @RenderSection("script", false)
+</body>
+
+</html>

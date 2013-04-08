@@ -1,0 +1,125 @@
+﻿<div id="main"></div>
+
+<script id="tmpl-powerPlantListItem" type="text/template">
+    <a href="#/powerplants/<%= id %>"><%= location %></a>
+</script>
+
+<script id="tmpl-powerPlantDetails" type="text/template">
+    <h2><%= location %></h2>
+    <p><strong>Type:</strong> <input id="type" value="<%= type %>" /></p>
+    <p><strong>Power Generated:</strong> <input id="powerGenerated" type="number" value="<%= powerGenerated %>" />MW</p>
+    <p><strong>Maintenance Cost:</strong> $<input id="maintenanceCost" type="number" value="<%= maintenanceCost %>" /></p>
+    <button id="save">Save</button>
+    <a href="#/">Return to List</a>
+</script>
+
+<script src="~/Content/js/lib/jquery-1.9.1.js"></script>
+<script src="~/Content/js/lib/underscore-1.4.4.js"></script>
+<script src="~/Content/js/lib/backbone-1.0.0.js"></script>
+<script src="~/Content/js/lib/backbone.marionette-1.0.1.js"></script>
+<script>
+
+    // Convert module and module's `start()` function to a Marionette application
+    PlantManager = new Marionette.Application();
+    
+    PlantManager.addInitializer(function () {
+        //PlantManager.appView = new PlantManager.AppView();
+        PlantManager.router = new PlantManager.Router({ controller: new PlantManager.Controller() });
+        Backbone.history.start();
+    });
+    
+    // Convert our AppView to a Marionette Layout
+    PlantManager.SiteLayout = Marionette.Layout.extend({
+        show: function (view) {
+            this.$el.html(view.el);
+        }
+    });
+    
+    PlantManager.layoutView = new PlantManager.SiteLayout({
+        el: '#main'
+    });
+
+    // Collections (remain the same)
+
+    PlantManager.PowerPlantList = Backbone.Collection.extend({
+        url: '/api/powerplants'
+    });
+
+    // Models (remain the same)
+
+    PlantManager.PowerPlant = Backbone.Model.extend({
+        urlRoot: '/api/powerplants'
+    });
+            
+    // Views
+    
+    // Item views are converted to ItemView
+    // List views are converted to CollectionView, which automatically renders each item
+    
+    PlantManager.PowerPlantListItemView = Marionette.ItemView.extend({
+        template: '#tmpl-powerPlantListItem',
+        tagName: 'li'
+    });
+
+    PlantManager.PowerPlantListView = Marionette.CollectionView.extend({
+        itemView: PlantManager.PowerPlantListItemView,
+        tagName: 'ul'
+    });
+
+    PlantManager.PowerPlantView = Backbone.View.extend({
+        events: {
+            'change #location': 'updateLocation',
+            'change #type': 'updateType',
+            'change #powerGenerated': 'updatePower',
+            'change #maintenanceCost': 'updateCost',
+            'click #save': 'save'
+        },
+        template: _.template($('#tmpl-powerPlantDetails').html()),
+        initialize: function () {
+            this.listenTo(this.model, 'sync', this.render);
+        },
+        render: function () {
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        },
+        updateLocation: function (e) { this.model.set({ location: $(e.target).val() }); },
+        updateType: function (e) { this.model.set({ type: $(e.target).val() }); },
+        updatePower: function (e) { this.model.set({ powerGenerated: $(e.target).val() }); },
+        updateCost: function (e) { this.model.set({ maintenanceCost: $(e.target).val() }); },
+        save: function () {
+            this.model.save();
+        },
+        returnToList: function () {
+            PlantManager.router.navigate('');
+        }
+    });
+            
+    // Router
+   
+    // The router is doing too much. We need to extract parts of this into a controller.
+    
+    PlantManager.Router = Marionette.AppRouter.extend({
+        appRoutes: {
+            '': 'list',
+            'powerplants/:id': 'details'
+        }
+    });
+    
+    PlantManager.Controller = Marionette.Controller.extend({
+        list: function () {
+            var list = new PlantManager.PowerPlantList();
+            var view = new PlantManager.PowerPlantListView({ collection: list });
+            PlantManager.layoutView.show(view);
+            list.fetch();
+        },
+        details: function (id) {
+            var item = new PlantManager.PowerPlant({ id: id });
+            var view = new PlantManager.PowerPlantView({ model: item });
+            PlantManager.layoutView.show(view);
+            item.fetch();
+        }
+    });
+    
+    PlantManager.start();
+
+</script>

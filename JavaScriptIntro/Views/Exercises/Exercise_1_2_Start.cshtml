@@ -1,0 +1,22 @@
+﻿<script>
+
+    // Type your code here.
+    var myName = 'Tim';
+    document.write(myName);
+    
+    var carsIveOwned = [
+        { make: 'Ford', model: 'Taurus', yearsOwned: 4 },
+        { make: 'Dodge', model: 'Avenger', yearsOwned: 5 },
+        { make: 'Ford', model: 'Focus', yearsOwned: 1 }
+    ];
+    
+    var carLogger = {
+        logCars: function (name, cars) {
+            document.write(name);
+            for (var i = 0; i < cars.length; i++) {
+                document.write(cars[i]);
+            }
+        }
+    };
+
+</script>

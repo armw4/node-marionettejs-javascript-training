@@ -1,0 +1,35 @@
+﻿@section head {
+    <script data-main="@Url.Content("~/Content/js/main-2.4-end.js")" src="~/Content/js/lib/require-2.1.5.js"></script>
+}
+
+<div id="main"></div>
+
+<script id="tmpl-powerPlantList" type="text/template">
+    <table>
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Type</th>
+                <th>Power Generated</th>
+                <th>Maintenance Cost</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</script>
+
+<script id="tmpl-powerPlantListItem" type="text/template">
+    <td><a href="#/powerplants/<%= id %>"><%= location %></a></td>
+    <td><%= type %></td>
+    <td><%= powerGenerated %>MW</td>
+    <td>$<%= maintenanceCost %></td>
+</script>
+
+<script id="tmpl-powerPlantDetails" type="text/template">
+    <h2><%= location %></h2>
+    <p><strong>Type:</strong> <input id="type" value="<%= type %>" /></p>
+    <p><strong>Power Generated:</strong> <input id="powerGenerated" type="number" value="<%= powerGenerated %>" />MW</p>
+    <p><strong>Maintenance Cost:</strong> $<input id="maintenanceCost" type="number" value="<%= maintenanceCost %>" /></p>
+    <button id="save">Save</button>
+    <a href="#/">Return to List</a>
+</script>
