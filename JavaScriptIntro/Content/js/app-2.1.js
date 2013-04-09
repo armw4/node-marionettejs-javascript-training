@@ -28,8 +28,8 @@
     PlantManager.PowerPlantList = Backbone.Collection.extend({
         url: '/api/powerplants',
         model: PlantManager.PowerPlant,
-        comparator: function(model) {
-          return model.get('powerGenerated');
+        comparator: function(left, right) {
+          return left.get('powerGenerated') > right.get('powerGenerated');
         }
     });
 
