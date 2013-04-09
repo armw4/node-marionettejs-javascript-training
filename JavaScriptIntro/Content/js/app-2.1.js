@@ -27,7 +27,7 @@
 
     PlantManager.PowerPlantList = Backbone.Collection.extend({
         url: '/api/powerplants',
-        model: PowerPlantManager.PowerPlant,
+        model: PlantManager.PowerPlant,
         comparator: function(model) {
           return model.get('powerGenerated');
         }
