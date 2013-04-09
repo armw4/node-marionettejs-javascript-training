@@ -45,16 +45,11 @@
         }
     });
 
-    PlantManager.PowerPlantListView = Backbone.View.extend({
+    PlantManager.PowerPlantListView = Marionette.ItemView.extend({
         tagName: 'table',
-        template: _.template($('#tmpl-powerPlantList').html()),
+        template: '#tmpl-powerPlantList',
         initialize: function () {
             this.listenTo(this.collection, 'sync', this.render);
-        },
-        render: function () {
-            this.$el.html(this.template({ page: this.collection.page, totalPages: this.collection.totalPages }));
-            this.collection.each(this.renderOne, this);
-            return this;
         },
         renderOne: function (powerPlant) {
             var view = new PlantManager.PowerPlantListItemView({ model: powerPlant });
