@@ -62,7 +62,7 @@
 
     PlantManager.PowerPlantListItemView = Backbone.View.extend({
         tagName: 'tr',
-        template: _.template($('#tmpl-powerPlantListItem').html()),
+        template: $('#tmpl-powerPlantListItem').html(),
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
