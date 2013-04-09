@@ -19,18 +19,18 @@
 
     // Collections
 
-    PlantManager.PowerPlantList = Backbone.Collection.extend({
-        url: '/api/powerplants',
-        model: PowerPlant,
-        comparator: function(model) {
-          return model.get('powerGenerated');
-        }
-    });
-
     // Models
 
     PlantManager.PowerPlant = Backbone.Model.extend({
         urlRoot: '/api/powerplants'
+    });
+
+    PlantManager.PowerPlantList = Backbone.Collection.extend({
+        url: '/api/powerplants',
+        model: PowerPlantManager.PowerPlant,
+        comparator: function(model) {
+          return model.get('powerGenerated');
+        }
     });
 
     // Views
