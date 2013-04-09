@@ -47,7 +47,7 @@
             this.listenTo(this.collection, 'sync', this.render);
         },
         render: function () {
-            var output = _.template(this.template, { page: this.collection.page, totalPages: this.collection.totalPages});
+            var output = this.template({ page: this.collection.page, totalPages: this.collection.totalPages});
 
             this.$el.html(output);
             this.collection.each(this.renderOne, this);
@@ -62,7 +62,7 @@
 
     PlantManager.PowerPlantListItemView = Backbone.View.extend({
         tagName: 'tr',
-        template: $('#tmpl-powerPlantListItem').html(),
+        template: _.template($('#tmpl-powerPlantListItem').html()),
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
