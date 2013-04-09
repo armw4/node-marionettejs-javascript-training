@@ -29,7 +29,7 @@
         url: '/api/powerplants',
         model: PlantManager.PowerPlant,
         comparator: function(left, right) {
-          return left.get('powerGenerated') > right.get('powerGenerated');
+          return right.get('powerGenerated') > left.get('powerGenerated');
         }
     });
 
