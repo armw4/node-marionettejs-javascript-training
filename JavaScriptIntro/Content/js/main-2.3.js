@@ -12,6 +12,10 @@
         },
         'underscore': {
             exports: '_'
+        },
+        'marionette': {
+          deps: ['underscore', 'jquery', 'backbone'],
+          exports: 'Marionette'
         }
     }
 });
