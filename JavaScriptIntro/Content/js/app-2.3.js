@@ -1,4 +1,4 @@
-﻿define(['jquery', 'underscore', 'backbone'], function ($, _, Backbone) {
+﻿define(['jquery', 'underscore', 'backbone', 'marionette'], function ($, _, Backbone, Marionette) {
 
     var PlantManager = {
 
@@ -10,11 +10,8 @@
 
     };
 
-    PlantManager.AppView = Backbone.View.extend({
-        el: '#main',
-        show: function (view) {
-            this.$el.html(view.el);
-        }
+    PlantManager.AppView = Marionette.Region.extend({
+        el: '#main'
     });
 
     // Collections
@@ -38,7 +35,7 @@
     });
 
     // Views
-    
+
     PlantManager.PowerPlantListItemView = Backbone.View.extend({
         tagName: 'tr',
         template: _.template($('#tmpl-powerPlantListItem').html()),
