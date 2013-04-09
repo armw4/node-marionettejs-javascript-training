@@ -25,6 +25,9 @@
             return plant1.get('powerGenerated') < plant2.get('powerGenerated');
         },
         parse: function(response) {
+            this.page = response.page;
+            this.totalPages = response.totalPages;
+
             return response.powerplants;
         }
     });
@@ -39,7 +42,7 @@
 
     PlantManager.PowerPlantListView = Backbone.View.extend({
         tagName: 'table',
-        template: $('#tmpl-powerPlantList').html(),
+        template: _.template($('#tmpl-powerPlantList').html(), { page: this.collection.page, totalPages: this.collection.totalPages}),
         initialize: function () {
             this.listenTo(this.collection, 'sync', this.render);
         },
@@ -97,11 +100,13 @@
     PlantManager.Router = Backbone.Router.extend({
         routes: {
             '': 'list',
-            'powerplants/:id': 'details'
+            'powerplants/:id': 'details',
+            'list(:/page)': 'list'
         },
-        list: function () {
+        list: function (page) {
             var list = new PlantManager.PowerPlantList();
             list.fetch({
+                data: { page: page },
                 success: function () {
                     var view = new PlantManager.PowerPlantListView({ collection: list });
                     PlantManager.appView.show(view);

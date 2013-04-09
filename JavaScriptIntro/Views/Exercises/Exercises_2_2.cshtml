@@ -15,6 +15,18 @@
             </tr>
         </thead>
         <tbody></tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <% if (page > 1) { %>
+                        <a href="#list/<%= page - 1%>">Previous</a>
+                    <% } %>
+                    <% if (page < totalPages) { %>
+                        | <a href="#list/<%= page + 1%>">Next</a>
+                    <% } %>
+                </td>
+            </tr>
+        </tfoot>
     </table>
 </script>
 
