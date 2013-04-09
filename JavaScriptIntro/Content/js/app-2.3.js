@@ -36,24 +36,18 @@
 
     // Views
 
-    PlantManager.PowerPlantListItemView = Backbone.View.extend({
+    PlantManager.PowerPlantListItemView = Marionette.ItemView.extend({
         tagName: 'tr',
-        template: _.template($('#tmpl-powerPlantListItem').html()),
-        render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
-            return this;
-        }
+        template: '#tmpl-powerPlantListItem'
     });
 
-    PlantManager.PowerPlantListView = Marionette.ItemView.extend({
+    PlantManager.PowerPlantListView = Marionette.CompositeView.extend({
         tagName: 'table',
         template: '#tmpl-powerPlantList',
+        itemViewContainer: 'tbody',
+        itemView: PlantManager.PowerPlantListItemView,
         initialize: function () {
             this.listenTo(this.collection, 'sync', this.render);
-        },
-        renderOne: function (powerPlant) {
-            var view = new PlantManager.PowerPlantListItemView({ model: powerPlant });
-            this.$el.append(view.render().el);
         }
     });
 
