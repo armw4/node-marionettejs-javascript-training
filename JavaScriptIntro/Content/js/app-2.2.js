@@ -104,7 +104,7 @@
         routes: {
             '': 'list',
             'powerplants/:id': 'details',
-            'list(:/page)': 'list'
+            'list(/:page)': 'list'
         },
         list: function (page) {
             var list = new PlantManager.PowerPlantList();
