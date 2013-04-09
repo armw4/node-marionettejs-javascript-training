@@ -30,6 +30,9 @@
         model: PlantManager.PowerPlant,
         comparator: function(left, right) {
           return right.get('powerGenerated') > left.get('powerGenerated');
+        },
+        parse: function(response) {
+          return response.powerplants;
         }
     });
 
